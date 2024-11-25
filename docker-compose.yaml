@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: socketio_app
+    ports:
+      - "80:80"    # HTTP traffic
+      - "443:443"  # HTTPS traffic
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro    # NGINX config
+      - ./nginx/certificate.crt:/etc/ssl/certs/certificate.crt:ro # SSL cert
+      - ./nginx/private.key:/etc/ssl/private/private.key:ro       # SSL key
+    environment:
+      NODE_ENV: production  # Optional: set Node.js environment
+    restart: always
